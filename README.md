@@ -179,7 +179,7 @@ Tomcat provides a sample web application file as part of its release documentati
 ### Running the Sample Application
 After deploying the sample web application, it will become visible in the Tomcat manager interface. Either click on the hyperlink or type the URL below into your browser to start it.
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img07.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image07.png)
 
 ## Packaging and Deploying Demo VMs
 To be added in future iterations …
