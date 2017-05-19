@@ -7,7 +7,7 @@ The examples given below are given for Windows 8.1 and Chocolatey.
 ### Administrator Prompt
 Installing software components in the following assumes you are using an administrator prompt (in case you are using Windows). Here’s how to create an administrator prompt:
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img01.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image01.png)
 
 ### Install Choco (Optional)
 You can use choco to install software prerequisites in “silent mode”. In order to do so, simply paste the command below into an administrator prompt and execute it. This step is optional.
@@ -73,7 +73,7 @@ The git command creates the following folder structure. Some files and folders s
 
 Always execute vagrant commands in the folder that defines the Vagrantfile configuration.
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img02.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image02.png)
 
 ### Install Vagrant Proxy Plugin (Untested)
 
@@ -118,7 +118,7 @@ Vagrant up will run the provisioning script to install the necessary software co
 
 Vagrant displays messages while provisioning. The screenshot below shows the output of successfully provisioning a guest. You can now use the vagrant ssh command to log into the guest OS. The guest is fully self-contained, i.e., it starts Tomcat as a service during boot.
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img03.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image03.png)
 
 ### Log into the Guest (Optional)
 You can log into the guest OS via SSH. Simply enter the following command in your prompt. Please note that additional configuration steps may be required on Windows for this to work.
@@ -140,7 +140,7 @@ By default, the following settings are applied:
 
 You can change these settings by editing the files in the conf directory you cloned via Git. Note that if you changes these settings after successfully provisioning a guest, you will need to rerun provisioning via the vagrant up --provision command (i.e., force provisioning).
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img04.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image04.png)
 
 ### Vagrant Teardown
 Vagrant provides three teardown commands to free up resources on the host. These are listed in the following beginning with the suspend command. Suspend saves the current state of the guest machine and stops it. Note that this will take up additional disk space.
@@ -169,12 +169,12 @@ vagrant destroy --force
 ### Deploying WAR Files
 You can deploy simple Java web applications via the built-in Tomcat manager interface. This interface is shown in the screenshot below. Simply select and deploy the corresponding file.
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img05.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image05.png)
 
 ### Deploying a Sample Application
 Tomcat provides a sample web application file as part of its release documentation. You can download this file as per the screenshot and use it for veriyfing your Tomcat installation.
 
-![Screenshot](https://raw.githubusercontent.com/kploesser/tomcat-util/master/img/img06.png)
+![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image06.png)
 
 ### Running the Sample Application
 After deploying the sample web application, it will become visible in the Tomcat manager interface. Either click on the hyperlink or type the URL below into your browser to start it.
