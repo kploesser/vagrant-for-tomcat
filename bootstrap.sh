@@ -17,7 +17,7 @@ sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
 # Download Tomcat
 cd /home/vagrant
 sudo apt-get -y install curl
-curl -O --progress-bar http://mirror.ventraip.net.au/apache/tomcat/tomcat-9/v9.0.0.M21/bin/apache-tomcat-9.0.0.M21.tar.gz
+curl -O --progress-bar http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M22/bin/apache-tomcat-9.0.0.M22.tar.gz
 
 # Extract into target directory
 sudo mkdir /opt/tomcat
@@ -32,12 +32,15 @@ sudo chown -R tomcat webapps/ work/ temp/ logs/
 
 # Copy basic Tomcat configuration files
 cd /home/vagrant
-sudo cp config/context.xml /opt/tomcat/webapps/manager/META-INF/context.xml
-sudo cp config/context.xml /opt/tomcat/webapps/host-manager/META-INF/context.xml
-sudo cp config/tomcat-users.xml /opt/tomcat/conf/tomcat-users.xml
+sudo cp webapps/config/context.xml /opt/tomcat/webapps/manager/META-INF/context.xml
+sudo cp webapps/config/context.xml /opt/tomcat/webapps/host-manager/META-INF/context.xml
+sudo cp webapps/config/tomcat-users.xml /opt/tomcat/conf/tomcat-users.xml
+
+# Copy any webapps in the source folder
+sudo cp webapps/*.war /opt/tomcat/webapps
 
 # Copy service file and reload daemon
-sudo cp config/tomcat.service /etc/systemd/system/
+sudo cp webapps/config/tomcat.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
 sudo ufw allow 8080

@@ -1,15 +1,19 @@
-# Tomcat Utility for Vagrant
+Tomcat Utility for Vagrant
+==========================
 
-## Getting Started
+Getting Started
+---------------
 
 The examples given below are given for Windows 8.1 and Chocolatey.
 
 ### Administrator Prompt
+
 Installing software components in the following assumes you are using an administrator prompt (in case you are using Windows). Here’s how to create an administrator prompt:
 
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image01.png)
 
 ### Install Choco (Optional)
+
 You can use choco to install software prerequisites in “silent mode”. In order to do so, simply paste the command below into an administrator prompt and execute it. This step is optional.
 
 If you do not wish to install software in silent mode, download the corresponding installer for each of the software packages listed in the following.
@@ -20,6 +24,7 @@ If you do not wish to install software in silent mode, download the correspondin
 ```
 
 ### Install Git
+
 Install Git to check out code, build scripts, data sets, and provisioning scripts as required. We will use Git in the following to check out the provisioning script for our demo VM.
 
 ```
@@ -46,6 +51,7 @@ choco install vagrant -y
 ```
 
 ### Install Packer (Optional)
+
 Optional component. Used in the later stages of the tutorial to build VMs for deployment.
 
 ```
@@ -54,6 +60,7 @@ choco install packer -y
 ```
 
 ### Clone VM Template
+
 Before you can run this step, please verify that you have a working Git installation. Then paste the following command into your administrator prompt and execute it.
 
 ```
@@ -63,11 +70,11 @@ git clone https://github.com/kploesser/tomcat-util.git
 
 The command will clone the VM template for provisioning a fully functional Tomcat server as virtual machine (guest) on your workstation (host). The following settings have been applied:
 
-* Guest OS is Ubuntu 16.04 LTS (Xenial)
-* Java JDK version is Oracle Java JDK 8
-* Tomcat version is 9.0 (M21)
-* Port forwarding is set to 4000 on the host machine
-* Use http://localhost:4000 to log into the Tomcat web interface after installation
+-	Guest OS is Ubuntu 16.04 LTS (Xenial)
+-	Java JDK version is Oracle Java JDK 8
+-	Tomcat version is 9.0 (M21)
+-	Port forwarding is set to 4000 on the host machine
+-	Use http://localhost:4000 to log into the Tomcat web interface after installation
 
 The git command creates the following folder structure. Some files and folders such as the vagrant folder and guest OS console log file will only appear after provisioning the guest.
 
@@ -96,6 +103,7 @@ config.proxy.no_proxy = "localhost,127.0.0.1"
 ```
 
 ### Vagrant Up
+
 Navigate inside the tomcat-util folder to run the following commands.
 
 ```
@@ -121,6 +129,7 @@ Vagrant displays messages while provisioning. The screenshot below shows the out
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image03.png)
 
 ### Log into the Guest (Optional)
+
 You can log into the guest OS via SSH. Simply enter the following command in your prompt. Please note that additional configuration steps may be required on Windows for this to work.
 
 You do not need to log into the guest OS unless you wish to make changes to it.
@@ -131,18 +140,19 @@ vagrant ssh
 ```
 
 ### Verify Your Installation
-Tomcat is fully operational after successfully provisioning the guest machine. You can verify that your installation has succeeded by loading http://localhost:4000 in your browser. Refer to the Vagrant documentation on how to change port forwarding for your installation.
-By default, the following settings are applied:
 
-* Tomcat administration apps are accessible from outside the guest machine
-* An administrator user is created (user: admin; password: admin)
-* This user is assigned privileges to access the manager apps on Tomcat’s homepage
+Tomcat is fully operational after successfully provisioning the guest machine. You can verify that your installation has succeeded by loading http://localhost:4000 in your browser. Refer to the Vagrant documentation on how to change port forwarding for your installation. By default, the following settings are applied:
+
+-	Tomcat administration apps are accessible from outside the guest machine
+-	An administrator user is created (user: admin; password: admin)
+-	This user is assigned privileges to access the manager apps on Tomcat’s homepage
 
 You can change these settings by editing the files in the conf directory you cloned via Git. Note that if you changes these settings after successfully provisioning a guest, you will need to rerun provisioning via the vagrant up --provision command (i.e., force provisioning).
 
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image04.png)
 
 ### Vagrant Teardown
+
 Vagrant provides three teardown commands to free up resources on the host. These are listed in the following beginning with the suspend command. Suspend saves the current state of the guest machine and stops it. Note that this will take up additional disk space.
 
 ```
@@ -164,22 +174,52 @@ vagrant destroy --force
 
 ```
 
-## Running the Demo
+Running the Demo
+----------------
 
 ### Deploying WAR Files
+
 You can deploy simple Java web applications via the built-in Tomcat manager interface. This interface is shown in the screenshot below. Simply select and deploy the corresponding file.
 
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image05.png)
 
 ### Deploying a Sample Application
-Tomcat provides a sample web application file as part of its release documentation. You can download this file as per the screenshot and use it for veriyfing your Tomcat installation.
+
+Tomcat provides a sample web application file as part of its release documentation. You can download this file as per the screenshot and use it for verifying your Tomcat installation.
+
+The corresponding URL is https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/ (depending on your Tomcat version you may want to adjust the URL).
 
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image06.png)
 
 ### Running the Sample Application
+
 After deploying the sample web application, it will become visible in the Tomcat manager interface. Either click on the hyperlink or type the URL below into your browser to start it.
 
 ![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image07.png)
 
-## Packaging and Deploying Demo VMs
-To be added in future iterations …
+Packaging and Deploying Demo VMs
+--------------------------------
+
+### Packaging as Vagrant base box
+
+Now that you have built a working image of the demo VM, it is time to pack it up for dissemination. This is achieved via a simple Vagrant command. Provide the name of the VM assigned in the Vagrantfile or copy it from the virtualisation provider (in our case this is VirtualBox). You can assign any name to the output file generated by Vagrant after the command (I have assigned the project name as name of the new base box).
+
+```
+vagrant package --base tomcat-util --output tomcat-util.box
+```
+
+Your Vagrant base box is now ready for shipping.
+
+You can use the `package-box.sh` script to run both packing and importing in one go.
+
+### Importing into your local Vagrant catalog
+
+In order to import the base box into your local Vagrant catalog, execute the command as shown below. This will register the base box in the local catalog and you can use it to instantiate new guest machines on the host using the preconfigured base box.
+
+```
+vagrant box add tomcat-util tomcat-util.box
+```
+
+You can use the `package-box.sh` script to run both packing and importing in one go.
+
+You can now initialise and boot a new guest machine via the normal Vagrant commands. Use the web manager or create folder sharing to copy web applications into the Tomcat web application folder to run your applications in the newly created Tomcat VM.

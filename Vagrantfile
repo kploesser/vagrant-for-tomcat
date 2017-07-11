@@ -13,10 +13,13 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/xenial64"
+  config.vm.provider "virtualbox" do |v|
+    v.name = "tomcat-util"
+  end
 
   config.vm.provision :shell, path: "bootstrap.sh"
   config.vm.network :forwarded_port, guest: 8080, host: 4000, host_ip: "127.0.0.1"
-  config.vm.synced_folder "config/", "/home/vagrant/config"
+  config.vm.synced_folder "webapps/", "/home/vagrant/webapps"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

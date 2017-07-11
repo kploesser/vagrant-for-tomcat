@@ -3,3 +3,9 @@
 
 # Log files
 *.log
+
+# Vagrant base boxes
+*.box
+
+# Web application archives
+*.war
