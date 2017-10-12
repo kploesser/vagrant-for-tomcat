@@ -10,7 +10,7 @@ The examples given below are given for Windows 8.1 and Chocolatey.
 
 Installing software components in the following assumes you are using an administrator prompt (in case you are using Windows). Here’s how to create an administrator prompt:
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image01.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image01.png)
 
 ### Install Choco (Optional)
 
@@ -20,7 +20,6 @@ If you do not wish to install software in silent mode, download the correspondin
 
 ```
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-
 ```
 
 ### Install Git
@@ -29,7 +28,6 @@ Install Git to check out code, build scripts, data sets, and provisioning script
 
 ```
 choco install git -y
-
 ```
 
 ### Install VirtualBox
@@ -38,7 +36,6 @@ Required to run the guest machine on your host. Install it via the following com
 
 ```
 choco install virtualbox -y
-
 ```
 
 ### Install Vagrant
@@ -47,7 +44,6 @@ Required to create, provision, and manage guests. Install it via the following c
 
 ```
 choco install vagrant -y
-
 ```
 
 ### Install Packer (Optional)
@@ -56,7 +52,6 @@ Optional component. Used in the later stages of the tutorial to build VMs for de
 
 ```
 choco install packer -y
-
 ```
 
 ### Clone VM Template
@@ -64,8 +59,7 @@ choco install packer -y
 Before you can run this step, please verify that you have a working Git installation. Then paste the following command into your administrator prompt and execute it.
 
 ```
-git clone https://github.com/kploesser/tomcat-util.git
-
+git clone https://github.com/kploesser/vagrant-for-tomcat.git
 ```
 
 The command will clone the VM template for provisioning a fully functional Tomcat server as virtual machine (guest) on your workstation (host). The following settings have been applied:
@@ -80,7 +74,7 @@ The git command creates the following folder structure. Some files and folders s
 
 Always execute vagrant commands in the folder that defines the Vagrantfile configuration.
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image02.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image02.png)
 
 ### Install Vagrant Proxy Plugin (Untested)
 
@@ -90,7 +84,6 @@ Please note there are some know issues running this plugin on Windows machines.
 
 ```
 vagrant plugin install vagrant-proxyconf
-
 ```
 
 The plugin requires additional settings in your Vagrantfile before your can run provisioning.
@@ -99,7 +92,6 @@ The plugin requires additional settings in your Vagrantfile before your can run 
 config.proxy.http     = "http://yourproxy:8080"
 config.proxy.https    = "http://yourproxy:8080"
 config.proxy.no_proxy = "localhost,127.0.0.1"
-
 ```
 
 ### Vagrant Up
@@ -108,7 +100,6 @@ Navigate inside the tomcat-util folder to run the following commands.
 
 ```
 cd tomcat-util
-
 ```
 
 The vagrant up command creates the guest machine and provisions it with the necessary software. Provisioning is only done the first time you create a guest unless the provision flag is set. The first time you create a guest machine, Vagrant will download a copy of the guest OS image. This may take up to 45 minutes depending on the bandwidth and latency of your network. This step is only required once unless you remove the image from the host.
@@ -119,14 +110,13 @@ vagrant up
 
 # Force provisioning when booting the guest
 vagrant up --provision
-
 ```
 
 Vagrant up will run the provisioning script to install the necessary software components, configure users, and copy configuration files from the host directory to the guest. This may take some time depending on the bandwidth and latency of your network.
 
 Vagrant displays messages while provisioning. The screenshot below shows the output of successfully provisioning a guest. You can now use the vagrant ssh command to log into the guest OS. The guest is fully self-contained, i.e., it starts Tomcat as a service during boot.
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image03.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image03.png)
 
 ### Log into the Guest (Optional)
 
@@ -136,7 +126,6 @@ You do not need to log into the guest OS unless you wish to make changes to it.
 
 ```
 vagrant ssh
-
 ```
 
 ### Verify Your Installation
@@ -149,7 +138,7 @@ Tomcat is fully operational after successfully provisioning the guest machine. Y
 
 You can change these settings by editing the files in the conf directory you cloned via Git. Note that if you changes these settings after successfully provisioning a guest, you will need to rerun provisioning via the vagrant up --provision command (i.e., force provisioning).
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image04.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image04.png)
 
 ### Vagrant Teardown
 
@@ -157,21 +146,18 @@ Vagrant provides three teardown commands to free up resources on the host. These
 
 ```
 vagrant suspend
-
 ```
 
 The vagrant halt command gracefully shuts down the guest OS and powers down the guest machine. This allows you to cleanly start it again. No additional disk space is taken up.
 
 ```
 vagrant halt
-
 ```
 
 The vagrant destroy command removes all traces of the guest machine from the host. It stops the guest OS, powers down the guest machine, and removes all guest hard disks.
 
 ```
 vagrant destroy --force
-
 ```
 
 Running the Demo
@@ -181,7 +167,7 @@ Running the Demo
 
 You can deploy simple Java web applications via the built-in Tomcat manager interface. This interface is shown in the screenshot below. Simply select and deploy the corresponding file.
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image05.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image05.png)
 
 ### Deploying a Sample Application
 
@@ -189,13 +175,13 @@ Tomcat provides a sample web application file as part of its release documentati
 
 The corresponding URL is https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/ (depending on your Tomcat version you may want to adjust the URL).
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image06.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image06.png)
 
 ### Running the Sample Application
 
 After deploying the sample web application, it will become visible in the Tomcat manager interface. Either click on the hyperlink or type the URL below into your browser to start it.
 
-![Screenshot](https://github.com/kploesser/tomcat-util/raw/master/img/image07.png)
+![Screenshot](https://github.com/kploesser/vagrant-for-tomcat/raw/master/images/image07.png)
 
 Packaging and Deploying Demo VMs
 --------------------------------

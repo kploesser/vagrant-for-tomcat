@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
     v.name = "tomcat-util"
   end
 
-  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.provision :shell, path: "scripts/bootstrap.sh"
   config.vm.network :forwarded_port, guest: 8080, host: 4000, host_ip: "127.0.0.1"
   config.vm.synced_folder "webapps/", "/home/vagrant/webapps"
 
