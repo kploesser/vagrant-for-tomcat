@@ -1,5 +1,5 @@
-Tomcat Utility for Vagrant
-==========================
+Vagrant with Tomcat
+===================
 
 Getting Started
 ---------------
